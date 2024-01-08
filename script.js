@@ -6,6 +6,8 @@ let round = 0
 
 const choices = document.querySelectorAll('.choice');
 let result_text = document.querySelector(".result-text");
+let result_point = document.querySelector(".result-point");
+let result_choice = document.querySelector(".result-choice");
 
 
 for(let i = 0; i < choices.length; i++){
@@ -68,7 +70,9 @@ function playRound(playerChoice, computerChoice){
 }
 
 function game(playerSelect){
-    result = playRound(playerSelect.toLowerCase(), getComputerChoice())
+    p = playerSelect.toLowerCase();
+    c = getComputerChoice();
+    result = playRound(p,c)
     round++
     switch (result) {
     case "win":
@@ -81,13 +85,18 @@ function game(playerSelect){
 	round--
 	break
     }
-    result_text.textContent = `Player: ${playerPoints} - Computer: ${computerPoints}`
-    if (round == 5){	
+    result_text.textContent = `Result: ${result}`
+    result_choice.textContent = `Player: ${p} - Computer: ${c}`
+    result_point.textContent = `Player: ${playerPoints} - Computer: ${computerPoints}`
+    if (round == 5){
 	if (playerPoints > computerPoints){
 	    console.log("player win the game")
+	    result_text.textContent = "player win the game"
 	}else if(computerPoints > playerPoints){
 	    console.log("computer win the game")
-	}	
+	    result_text.textContent = "computer win the game"
+	}
+	
 	console.log(`Result: ${result}`)	
 	console.log(`(${playerPoints}:${computerPoints})`)
 	
