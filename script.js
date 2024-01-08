@@ -1,5 +1,19 @@
 const CHOICES = ['rock', 'paper', 'scissor']
 
+let playerPoints = 0
+let computerPoints = 0
+let round = 0
+
+const choices = document.querySelectorAll('.choice');
+let result_text = document.querySelector(".result-text");
+
+
+for(let i = 0; i < choices.length; i++){
+    choices[i].addEventListener('click',() => {
+	game(choices[i].textContent)
+    });
+}
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
@@ -53,30 +67,38 @@ function playRound(playerChoice, computerChoice){
     }
 }
 
-function game(){
-    let playerPoints = 0
-    let computerPoints = 0
-    for (let i = 0;  i < 5; i++){
-	result = playRound(playerSelection(), getComputerChoice())
-	switch (result) {
-	case "win":
-	    playerPoints++
-	    break
-	case "lose":
-	    computerPoints++
-	    break
-	}
-	console.log(`Result: ${result}`)
+function game(playerSelect){
+    result = playRound(playerSelect.toLowerCase(), getComputerChoice())
+    round++
+    switch (result) {
+    case "win":
+	playerPoints++
+	break
+    case "lose":
+	computerPoints++
+	break
+    case "tie":
+	round--
+	break
     }
-    if (playerPoints > computerPoints){
-	console.log("player win the game")
-    }else if(computerPoints > playerPoints){
-	console.log("computer win the game")
-    }else {
-	console.log("It's a draw")
+    result_text.textContent = `Player: ${playerPoints} - Computer: ${computerPoints}`
+    if (round == 5){	
+	if (playerPoints > computerPoints){
+	    console.log("player win the game")
+	}else if(computerPoints > playerPoints){
+	    console.log("computer win the game")
+	}	
+	console.log(`Result: ${result}`)	
+	console.log(`(${playerPoints}:${computerPoints})`)
+	
+	playerPoints = 0
+	computerPoints = 0
+	round = 0
+    }else{
+	
+	//game(playerSelection())
     }
-    console.log(`(${playerPoints}:${computerPoints})`)
 }
 
-game()
+//game(playerSelection())
 
